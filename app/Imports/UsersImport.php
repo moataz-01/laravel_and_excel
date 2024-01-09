@@ -4,9 +4,18 @@ namespace App\Imports;
 
 use App\Models\User;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithStartRow;
 
-class UsersImport implements ToModel
+class UsersImport implements ToModel, WithStartRow
 {
+    /**
+     * @return int
+     */
+    public function startRow(): int
+    {
+        return 2;
+    }
+
     /**
     * @param array $row
     *
@@ -14,12 +23,11 @@ class UsersImport implements ToModel
     */
     public function model(array $row)
     {
-        // dd($row[1]);
         return new User([
-            'id' => $row[0],
-            'full_name' => $row[1],
-            'email' => $row[2],
-            'phone_number' => $row[3],
+            'full_name' => $row[0],
+            'email' => $row[1],
+            'phone_number' => $row[2],
+            'password' => $row[3],
         ]);
     }
 }
